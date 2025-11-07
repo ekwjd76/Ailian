@@ -1,7 +1,22 @@
 import nltk
 from nltk.tokenize import word_tokenize, sent_tokenize
 
-nltk.download('punkt', quiet=True)
+#nltk.download('punkt')
+
+# punkt / punkt_tab 둘 다 자동 다운로드
+for resource in ['punkt', 'punkt_tab']:
+    try:
+        nltk.data.find(f'tokenizers/{resource}')
+    except LookupError:
+        nltk.download(resource, quiet=True)
+
+#웹/exe 배포일때
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
+
 
 def feature_ai_score(text: str) -> float:
     words = word_tokenize(text)
