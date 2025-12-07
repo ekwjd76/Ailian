@@ -6,6 +6,8 @@ Hugging Face의 openai-community/roberta-base-openai-detector 모델을 사용�
 
 ※ 본 프로젝트의 라이선스 : MIT License 입니다. 따라서 MIT 라이선스 조건에 따라 자유롭게 사용, 수정, 배포할 수 있습니다. 다만, 본 프로젝트를 사용함으로 인해 발생하는 모든 책임은 사용자에게 있음을 명시합니다.
 
+(ailian의 이름은 외계인을 뜻하는 영어 alien의 발음과 같게 만들어서 우리 일상에 침략자처럼 침투한 ai를 표현하고 싶어서 이름을 지었고 ailian에서 뒤의 모음이 a인건 그냥 a로 라임을 맞췄습니다. :D)
+
 --- 
 
 # 사용된 오픈소스
