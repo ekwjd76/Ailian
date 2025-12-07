@@ -9,7 +9,7 @@ import torch
 # -------------------------------
 # 모델 설정
 # -------------------------------
-MODEL_NAME = "klue/roberta-base"
+MODEL_NAME = "MLP-KTLim/roberta-base-korean-ai-detector"
 DEVICE = 0 if torch.cuda.is_available() else -1
 
 # -------------------------------
