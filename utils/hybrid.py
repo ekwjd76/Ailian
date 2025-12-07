@@ -1,15 +1,3 @@
-"""
-utils/hybrid.py
-
-- hybrid_predict(feature_score, model_score, text_features=None): 즉시 사용 가능한 예측기
-- train_calibrator(csv_path, out_path): 로컬 라벨 데이터로 로지스틱 회귀 보정 모델 학습 (선택 기능)
-
-CSV 포맷(예시):
-text,label
-"이 문장은 사람이 쓴 예시입니다.",human
-"GPT가 생성한 예시입니다.",ai
-"""
-
 import os
 import pickle
 from typing import Optional
@@ -28,11 +16,6 @@ CALIBRATOR_PATH = "utils/hybrid_calibrator.pkl"
 
 
 def hybrid_predict(feature_score: float, model_score: float) -> float:
-    """
-    빠른 하이브리드 결합: feature_score (0~100), model_score (0~1)
-    반환값: 최종 AI 확률 (0~100)
-    기본: final = 100 * (w_f * feature/100 + w_m * model_score)
-    """
     w_f = DEFAULT_WEIGHTS["feature"]
     w_m = DEFAULT_WEIGHTS["model"]
 
@@ -41,10 +24,6 @@ def hybrid_predict(feature_score: float, model_score: float) -> float:
 
 
 def _prepare_features(df: pd.DataFrame):
-    """
-    df must have columns: 'text' and 'label' (label in {'ai','human'}).
-    Returns X (n x 2): [feature_score_norm, model_score], y (0/1)
-    """
     from utils.feature_based import feature_ai_score
     from utils.model_based import model_ai_score
 
@@ -63,12 +42,6 @@ def _prepare_features(df: pd.DataFrame):
 
 
 def train_calibrator(csv_path: str, out_path: Optional[str] = None, test_size=0.2, random_state=42):
-    """
-    Train a simple logistic regression calibrator from labeled CSV.
-    CSV must have 'text' and 'label' columns. label values: 'ai' or 'human' (case-insensitive)
-    Saves the fitted sklearn model to out_path (default: utils/hybrid_calibrator.pkl).
-    Prints out evaluation metrics.
-    """
     if out_path is None:
         out_path = CALIBRATOR_PATH
 
@@ -110,12 +83,6 @@ def load_calibrator(path: Optional[str] = None):
 
 
 def hybrid_predict_with_calibrator(feature_score: float, model_score: float, calibrator=None):
-    """
-    If calibrator is provided (sklearn model), use it to compute probability.
-    Else fallback to hybrid_predict.
-    feature_score: 0~100, model_score: 0~1
-    Returns final AI probability (0~100)
-    """
     if calibrator is None:
         calibrator = load_calibrator()
     if calibrator is None:

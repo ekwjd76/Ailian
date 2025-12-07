@@ -1,16 +1,20 @@
 """
-model_based.py — 한국어 전용 로버타 기반 AI 탐지기
+model_based.py — 한국어 전용 로버타 기반 AI 탐지기 (보정기 미적용)
 MIT License | 2025
 """
 
 from transformers import pipeline
 import torch
 
-# ✅ 한국어 전용 모델 (문체 판별 성능 우수, MIT License)
+# -------------------------------
+# 모델 설정
+# -------------------------------
 MODEL_NAME = "klue/roberta-base"
-
 DEVICE = 0 if torch.cuda.is_available() else -1
 
+# -------------------------------
+# 모델 로드
+# -------------------------------
 try:
     ai_detector = pipeline(
         "text-classification",
@@ -23,13 +27,16 @@ except Exception as e:
     print(f"⚠️ 모델 로드 실패: {e}")
     ai_detector = None
 
-
+# -------------------------------
+# 모델 기반 AI 점수
+# -------------------------------
 def model_ai_score(text: str) -> float:
     """
-    한국어 문장을 입력받아 AI 작성 확률 추정 (0.0~1.0)
+    KLUE 모델을 사용한 한국어 AI 작성 확률 추정 (0~1)
+    보정기 없이 단독 점수만 사용
     """
     if not ai_detector:
-        return 0.5
+        return 0.5  # 모델 없으면 중립값
 
     try:
         snippet = text.strip()
@@ -40,12 +47,13 @@ def model_ai_score(text: str) -> float:
         label = result.get("label", "").upper()
         score = float(result.get("score", 0.5))
 
-        # klue-roberta는 감성 분류용이므로 단독 사용 시 의미 약함
-        # → 보정기와 함께 사용할 때 더 정확
-        if "POSITIVE" in label or "AI" in label or "FAKE" in label:
+        # 단순 POSITIVE/NEGATIVE 해석
+        if "POSITIVE" in label:
             ai_score = score
-        else:
+        elif "NEGATIVE" in label:
             ai_score = 1.0 - score
+        else:
+            ai_score = 0.5
 
         ai_score = max(0.0, min(1.0, ai_score))
         return ai_score
@@ -53,3 +61,18 @@ def model_ai_score(text: str) -> float:
     except Exception as e:
         print(f"⚠️ model_ai_score error: {e}")
         return 0.5
+
+# -------------------------------
+# 테스트
+# -------------------------------
+if __name__ == "__main__":
+    test_texts = [
+        "이 문장은 AI가 작성했을 가능성이 있는 예시 문장입니다.",
+        "오늘 날씨가 맑고 기분이 좋다.",
+        "챗GPT를 활용한 자동 보고서 작성 예제입니다."
+    ]
+    
+    for t in test_texts:
+        print("문장:", t)
+        print("Model score:", model_ai_score(t))
+        print("-"*40)
