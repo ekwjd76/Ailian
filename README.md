@@ -9,10 +9,18 @@ Hugging Face의 openai-community/roberta-base-openai-detector 모델을 사용�
 --- 
 
 # 사용된 오픈소스
--Python : https://img.shields.io/badge/python-3.9%2B-blue
--Streamlit : https://img.shields.io/badge/Streamlit-Ready-red
--License: MIT : https://img.shields.io/badge/License-MIT-yellow.svg
--HuggingFace(모델) : https://huggingface.co/openai-community/roberta-base-openai-detector
+
+Python
+https://www.python.org/
+
+Streamlit
+https://streamlit.io/
+
+MIT License
+https://opensource.org/licenses/MIT
+
+HuggingFace (모델)
+https://huggingface.co/openai-community/roberta-base-openai-detector
 
 ---
 
