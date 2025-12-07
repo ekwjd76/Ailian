@@ -27,7 +27,7 @@ https://huggingface.co/openai-community/roberta-base-openai-detector
 ---
 
 ### 사용방법
-링크 : https://will-be-copykiller-lc4jmymnod2qfce8r2o9xr.streamlit.app/
+링크 : https://ailian.streamlit.app/
 1. 링크에 접속한다.
 2. 텍스트란에 테스트할 문장을 입력한다
 3. 분석하기 버튼을 누른다.
