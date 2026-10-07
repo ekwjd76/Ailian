@@ -40,9 +40,9 @@ https://huggingface.co/openai-community/roberta-base-openai-detector
  📦 AIlian  
 ├── app.py                       # Streamlit UI   
 ├── images/                      # 리드미 파일용 이미지 폴더   
-├── requirements.txt             # 필요한 라이브러리 목록   
+├── requirements.txt             # 필요한 라이브러리 목록  
 └── utils/    
-      └── model_based.py           # AI Detector 모델   
+         └── model_based.py           # AI Detector 모델   
    
  이 프로젝트는 위와 같이 구성되어 있습니다.
   ![Main UI](images/mainui.png)
